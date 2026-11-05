@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Produto — NISHLAM Project</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=29">
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<header class="top solid">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="NISHLAM Project — início">
+      <img class="n" src="assets/logo.png" alt="">
+      <img class="wm" src="assets/wordmark.png" alt="nishlam project">
+    </a>
+    <nav class="nav">
+      <a href="index.html#marca">A marca</a>
+      <a href="index.html#catalogo">Catálogo</a>
+      <a href="index.html#faq">Dúvidas</a>
+      <a class="js-contact" href="#">Orçamento</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumb pix"><a href="index.html">início</a>/<a href="index.html#catalogo">catálogo</a>/<span id="crumb-line"></span></div>
+
+  <div class="pdp">
+    <div class="viewer loading" id="viewer">
+      <span class="hint pix" id="hint">pré-visualização</span>
+      <canvas id="cv" aria-label="Pré-visualização da camiseta"></canvas>
+      <div class="side" id="side" role="group" aria-label="Lado da peça">
+        <button data-v="front" aria-pressed="true">Frente</button><button data-v="back" aria-pressed="false">Costas</button>
+      </div>
+      <button class="zoom-btn pix" id="zoom" aria-pressed="false" title="Ver o detalhe da estampa no tecido">lupa</button>
+      <canvas class="loupe" id="loupe" width="240" height="240" aria-hidden="true"></canvas>
+      <div class="busy pix">carregando…</div>
+    </div>
+
+    <div class="info">
+      <div class="eyebrow pix"><b></b><span id="line"></span></div>
+      <h1 id="name"></h1>
+      <p class="lead" id="desc"></p>
+
+      <div class="block">
+        <div class="block-h"><span>Cor</span><b id="color-name"></b></div>
+        <div class="swatches" id="swatches" role="group" aria-label="Cores"></div>
+      </div>
+
+      <div class="block">
+        <div class="block-h"><span>Tamanho</span><b id="size-name">escolha</b></div>
+        <div class="sizes" id="sizes" role="group" aria-label="Tamanhos"></div>
+      </div>
+
+      <section class="sim" id="sim" aria-label="Simulador de estampa">
+        <h2 id="sim-h">Simule sua estampa</h2>
+        <p>Envie sua arte e veja como ela fica na peça. O fundo é recortado automaticamente — você ajusta tamanho e posição arrastando na imagem. Use <b>Frente / Costas</b> na imagem para virar a peça e estampar os dois lados.</p>
+        <label class="drop" id="drop">
+          <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          <span><b>Enviar arte</b> ou arraste o arquivo aqui<small>PNG, JPG, WEBP ou SVG · PNG com fundo transparente dá o melhor resultado</small></span>
+        </label>
+        <div class="controls">
+          <div class="artprev"><canvas id="artorig" width="56" height="56" title="Arte original"></canvas><span class="arr" aria-hidden="true">→</span><canvas id="artprev" width="56" height="56" title="Como vai para a peça"></canvas><span id="artinfo"></span></div>
+          <label class="check"><input type="checkbox" id="rmbg" checked> Recortar o fundo da arte</label>
+          <div class="ctl" id="tolwrap">
+            <div class="ctl-row"><span>Sensibilidade do recorte</span><span id="tolv"></span></div>
+            <input type="range" id="tol" min="5" max="120" value="38">
+          </div>
+          <label class="check"><input type="checkbox" id="inner"> Remover o fundo também dentro da arte (letras, vazados)</label>
+          <div class="ctl">
+            <div class="ctl-row"><span>Tamanho da estampa</span><span id="scalev"></span></div>
+            <input type="range" id="scale" min="8" max="72" value="40">
+          </div>
+          <div class="ctl">
+            <div class="ctl-row"><span>Posição</span></div>
+            <div class="seg" id="pos">
+              <button data-p="center" aria-pressed="true">Centro do peito</button>
+              <button data-p="alt" aria-pressed="false">Peito esquerdo</button>
+              <button id="remove" aria-pressed="false">Remover arte</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" id="order" target="_blank" rel="noopener" href="#">Pedir orçamento</a>
+        <button class="btn ghost" id="download">Baixar simulação</button>
+      </div>
+
+      <div class="block">
+        <div class="block-h"><span>Tabela de medidas (cm)</span></div>
+        <table class="measures" id="measures"></table>
+        <p class="note">Percentual de encolhimento após lavagem: comprimento 4–7%, largura 3–5%.<br>Prazo mínimo de produção de 12 dias úteis. A simulação é ilustrativa: cores e proporções finais são confirmadas no orçamento.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <img class="corner br" src="assets/waves-diag.webp" alt="" aria-hidden="true">
+  <div class="wrap">
+    <img class="big" src="assets/wordmark.png" alt="nishlam project">
+    <div class="foot-row">
+      <span class="pix">serigrafia de camisetas e acessórios.</span>
+      <span><a href="https://www.instagram.com/nishlamproject/" target="_blank" rel="noopener">@nishlamproject</a> · <a class="js-contact" href="#">Fale com a gente</a></span>
+      <span>© <span id="y"></span> NISHLAM Project · desenvolvido por <a href="https://caraffa-portfolio.vercel.app" target="_blank" rel="noopener">nicolas caraffa</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="products.js?v=29"></script>
+<script src="produto.js?v=29"></script>
+</body>
+</html>
