@@ -65,7 +65,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes blink { 50% { transform: translateY(8px); } }
 
 /* ---------- apresentação (pinned) ---------- */
-.story { height: 420vh; position: relative; }
+.story { height: 500vh; position: relative; scroll-margin-top: -80vh; } /* +80vh: a maré apaga o topo antes da apresentação andar */
 .story-pin { position: sticky; top: 0; height: 100svh; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 4vw; padding: 80px var(--gutter) 40px; max-width: var(--max); margin: 0 auto; }
 .story-steps { position: relative; min-height: 340px; }
 .story-step { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: translateY(30px); transition: opacity .6s, transform .6s cubic-bezier(.2,.8,.2,1); }
@@ -221,7 +221,8 @@ table.measures { width: 100%; border-collapse: collapse; font-size: 14px; margin
 }
 
 /* ---------- topo preto (o "n" bege do logo pede fundo escuro); o site segue branco depois ---------- */
-.hero { background: #0c0c0c; color: #fff; }
+.hero { background: #0c0c0c; color: #fff; position: sticky; top: 0; z-index: 5; }
+.hero.gone { visibility: hidden; }
 .hero .hero-wm { filter: invert(1); }
 .hero p.tag, .hero p.from, .hero .scroll-cue { color: rgba(255,255,255,.6); }
 .hero .scroll-cue i { background: #fff; }

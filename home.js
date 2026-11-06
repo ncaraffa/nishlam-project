@@ -7,9 +7,14 @@ document.querySelectorAll('.js-contact').forEach((a) => {
 
 const header = document.getElementById('top');
 const hero = document.querySelector('.hero');
+// o topo fica preso enquanto a maré sobe; o que ela cobre é apagado e revela a apresentação, que já está atrás
+const TIDE = () => innerHeight * 0.8;            // rolagem até a maré apagar o topo inteiro
+const fitHero = () => { document.querySelector('.story').style.marginTop = `${-hero.offsetHeight}px`; };
+fitHero(); addEventListener('resize', fitHero);
 const onScroll = () => {
   header.classList.toggle('solid', scrollY > 30);
-  header.classList.toggle('dark', scrollY < (hero.offsetHeight - 40) / 2.9); // a maré alcança o topo
+  header.classList.toggle('dark', scrollY < TIDE() * 0.62); // a maré alcança o topo
+  hero.classList.toggle('gone', scrollY >= TIDE());
 };
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
@@ -129,7 +134,7 @@ let frames = [];
 let current = -1;
 function update() {
   const r = story.getBoundingClientRect();
-  const prog = Math.min(0.999, Math.max(0, -r.top / (r.height - innerHeight)));
+  const prog = Math.min(0.999, Math.max(0, (-r.top - TIDE()) / (r.height - innerHeight - TIDE())));
   const i = Math.floor(prog * steps.length);
   if (i === current && frames.length && frames[i].style.opacity === '1') return;
   current = i;
@@ -164,23 +169,26 @@ if (wv) {
   };
   // maré: ao rolar, uma onda com as faixas da marca sobe e cobre o preto, levando à parte branca
   const tide = document.querySelector('.hero-tide'), tg = tide.getContext('2d');
-  const paper = getComputedStyle(document.body).backgroundColor;
   const order = [cols[5], cols[3], cols[2], cols[1], cols[4], cols[0]];
   const sizeTide = () => { tide.width = W; tide.height = H; };
   sizeTide(); addEventListener('resize', sizeTide);
+  // abaixo da onda o topo é recortado (clip-path): aparece a apresentação que está atrás
   const drawTide = (t) => {
     tg.clearRect(0, 0, W, H);
-    const amp = H * .07, bt = Math.max(2, Math.round(H * .022));
-    const base = H + amp + bt * order.length - (scrollY / PX) * 1.9;   // sobe ~2x mais rápido que a rolagem
-    if (base - amp - bt * order.length > H) return;
+    const amp = H * .07, bt = Math.max(2, Math.round(H * .022)), band = amp * 1.6 + bt * order.length;
+    const p = Math.min(1, scrollY / TIDE());
+    if (p <= 0) { hero.style.clipPath = ''; return; }
+    const base = H + band - p * (H + band * 2);
+    const pts = [];
     for (let x = 0; x < W; x++) {
-      const yf = base + Math.sin(x * .03 - t * .3) * amp + Math.sin(x * .011 + t * .17) * amp * .6;
-      order.forEach((c, i) => { tg.fillStyle = c; tg.fillRect(x, Math.round(yf - (order.length - i) * bt), 1, bt + 1); });
-      tg.fillStyle = paper; tg.fillRect(x, Math.round(yf), 1, H);
+      const yf = Math.round(base + Math.sin(x * .03 - t * .3) * amp + Math.sin(x * .011 + t * .17) * amp * .6);
+      order.forEach((c, i) => { tg.fillStyle = c; tg.fillRect(x, yf - (order.length - i) * bt, 1, bt); });
+      pts.push(`${x * PX}px ${yf * PX}px`, `${(x + 1) * PX}px ${yf * PX}px`);
     }
+    hero.style.clipPath = `polygon(0 0, 100% 0, ${pts.reverse().join(',')})`;
   };
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   addEventListener('scroll', () => { if (still) drawTide(0); }, { passive: true });
   if (still) { draw(0); drawTide(0); }
-  else (function loop(now) { if (visible) { draw(now / 1000); drawTide(now / 1000); } requestAnimationFrame(loop); })(0);
+  else (function loop(now) { if (visible && !hero.classList.contains('gone')) { draw(now / 1000); drawTide(now / 1000); } requestAnimationFrame(loop); })(0);
 }
