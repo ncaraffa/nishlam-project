@@ -2,7 +2,7 @@
 
 // Número do WhatsApp com DDI+DDD, só dígitos (ex.: '5511999999999').
 // Vazio = os botões de orçamento abrem o Direct do Instagram.
-const WHATSAPP = '';
+const WHATSAPP = '556791361342';
 const INSTAGRAM = 'nishlamproject';
 
 const COLORS = {

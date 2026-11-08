@@ -41,10 +41,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 720px) { .nav a:not(.btn) { display: none; } }
 
 .btn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 22px; border: 1.5px solid var(--ink); border-radius: 0; background: var(--ink); color: #fff; font-size: 14px; font-weight: 600; position: relative; transition: transform .15s; }
-.btn::after { content: ''; position: absolute; inset: auto 0 -5px 5px; height: 5px; background: var(--stripe); opacity: 0; transition: opacity .2s; }
-.btn:hover::after { opacity: 1; }
+.btn::after { content: ''; position: absolute; inset: auto 0 -5px 5px; height: 5px; background: var(--stripe); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.btn:hover::after { transform: scaleX(1); }
 .btn:active { transform: translateY(1px); }
 .btn.ghost { background: transparent; color: var(--ink); }
+.btn.buy { background: var(--c3); border-color: var(--c3); }
 .btn.sm { height: 38px; padding: 0 16px; font-size: 13px; }
 
 /* ---------- hero ---------- */

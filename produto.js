@@ -50,6 +50,7 @@ function sync() {
   $('size-name').textContent = state.size || 'escolha';
   const printed = ['front', 'back'].filter((v) => (v === view ? state.art : sides[v].art));
   const where = printed.map((v) => (v === 'front' ? 'frente' : 'costas')).join(' e ');
+  $('buy').href = contactUrl(`Olá! Tenho interesse na ${product.name}, cor ${state.color}${state.size ? `, tamanho ${state.size}` : ''}.`);
   $('order').href = contactUrl(
     `Olá! Quero um orçamento na NISHLAM Project:\n• ${product.name} (${line.label} · ${line.sub})\n• Cor: ${state.color}\n• Tamanho: ${state.size || 'a definir'}`
     + (printed.length ? `\n• Estampa: ${where}\nFiz a simulação no site e vou enviar a arte por aqui.` : ''));
